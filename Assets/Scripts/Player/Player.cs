@@ -26,8 +26,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float dashPunchTime;
     [SerializeField] private float dashPunchTimeCounter,
         dashCooldownTime, dashCooldownTimeCounter, dashSpeed,
-        dashChargePercentage, dashPunchChargeTime, dashPunchChargeTimeCounter,
-        dashPunchChargeTimeInitVal;
+        dashChargePercentage, dashPunchChargeTime, dashPunchChargeTimeCounter;
 
     private void FixedUpdate()
     {
@@ -127,7 +126,6 @@ public class Player : MonoBehaviour
         {   
             isDashPunchCharging = true;
             dashPunchChargeTimeCounter = Time.time + dashPunchChargeTime;
-            dashPunchChargeTimeInitVal = Time.time;
         }
         else if (!isClicking && isDashPunchCharging)
         {
