@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa268a41a0a504419b1b1f31b9df5fc, type: 3}
+  m_Name: New Unit
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  totalHealth: 0
+  movementSpeed: 0
+  armorElement: 0
+  abilities:
+  - {fileID: 11400000, guid: d081e67aec080ba42ae73ec7b63d1542, type: 2}
