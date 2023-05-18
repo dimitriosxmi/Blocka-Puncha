@@ -15747,15 +15747,19 @@ MonoBehaviour:
   myRigidbody: {fileID: 1437878663}
   myAnimator: {fileID: 482720636}
   map: {fileID: 274381196}
-  movementSpeed: 3
+  movementSpeed: 4
   sprintSpeed: 4
   lastAimedDirection: {x: 0, y: 0}
   isClicking: 0
-  dashPunchTime: 0.2
+  dashPunchTime: 0.25
   dashPunchTimeCounter: 0
-  dashCooldownTime: 0.1
+  dashCooldownTime: 3
   dashCooldownTimeCounter: 0
-  dashSpeed: 20
+  dashSpeed: 30
+  dashChargePercentage: 0
+  dashPunchChargeTime: 1
+  dashPunchChargeTimeCounter: 0
+  dashPunchChargeTimeInitVal: 0
 --- !u!58 &1437878662
 CircleCollider2D:
   m_ObjectHideFlags: 0

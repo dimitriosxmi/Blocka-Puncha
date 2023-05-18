@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     private bool isSprinting = false;
     private bool isDashPunching = false;
     private bool isDashPunchCharging = false;
-    [SerializeField] private float movementSpeed = 7f;
+    [SerializeField] private float movementSpeed = 4;
     [SerializeField] private float sprintSpeed = 5f;
     [SerializeField] private Vector2 lastAimedDirection = Vector2.zero;
 
@@ -25,7 +25,9 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isClicking;
     [SerializeField] private float dashPunchTime;
     [SerializeField] private float dashPunchTimeCounter,
-        dashCooldownTime, dashCooldownTimeCounter, dashSpeed;
+        dashCooldownTime, dashCooldownTimeCounter, dashSpeed,
+        dashChargePercentage, dashPunchChargeTime, dashPunchChargeTimeCounter,
+        dashPunchChargeTimeInitVal;
 
     private void FixedUpdate()
     {
@@ -47,8 +49,8 @@ public class Player : MonoBehaviour
     private void Movement()
     {
         myRigidbody.velocity = new Vector2(
-            movementInput.x * movementSpeed * (isDashPunchCharging ? 0.6f : 1f),
-            movementInput.y * movementSpeed * (isDashPunchCharging ? 0.6f : 1f));
+            movementInput.x * movementSpeed * (isDashPunchCharging ? 0.4f : 1f),
+            movementInput.y * movementSpeed * (isDashPunchCharging ? 0.4f : 1f));
     }
 
     private void SprintMovement()
@@ -97,7 +99,7 @@ public class Player : MonoBehaviour
 
         if (Time.time >= dashCooldownTimeCounter)
         {
-            dashPunchTimeCounter = Time.time + dashPunchTime;
+            dashPunchTimeCounter = Time.time + (dashPunchTime * dashChargePercentage);
             dashCooldownTimeCounter = Time.time + dashCooldownTime;
             isClicking = false;
             Aim();
@@ -121,21 +123,25 @@ public class Player : MonoBehaviour
 
     private void DashPunchCharging()
     {
-        if (isClicking && !isDashPunching)
+        if (isClicking && !isDashPunching && !isDashPunchCharging && Time.time >= dashCooldownTimeCounter)
         {   
             isDashPunchCharging = true;
+            dashPunchChargeTimeCounter = Time.time + dashPunchChargeTime;
+            dashPunchChargeTimeInitVal = Time.time;
         }
         else if (!isClicking && isDashPunchCharging)
         {
             isDashPunchCharging = false;
-            DamageModifier();
+            dashChargePercentageModifier();
             DoDashPunch();
         }
     }
 
-    private void DamageModifier()
+    private void dashChargePercentageModifier()
     {
-        // modify the damage based on the % of charge
+        float timeLeftToCharge = dashPunchChargeTimeCounter - Time.time - dashPunchChargeTime;
+        dashChargePercentage = Math.Clamp(Math.Abs(
+                1 / dashPunchChargeTime * timeLeftToCharge), 0f, 1f);
     }
 
     private void OnMove(InputValue value)
